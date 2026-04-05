@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using ProductsApplication.Features.Suppliers.Domain;
 
 namespace ProductsApplication.Features.Products.Domain
 {
@@ -10,6 +10,6 @@ namespace ProductsApplication.Features.Products.Domain
         public decimal Price { get; set; }
 
         public int? SupplierId { get; set; }
-        public Suppliers.Domain.Supplier? Supplier { get; set; }
+        public Supplier? Supplier { get; set; }
     }
 }

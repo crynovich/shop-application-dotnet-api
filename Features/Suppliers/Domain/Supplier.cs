@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using ProductsApplication.Features.Products.Domain;
 
 namespace ProductsApplication.Features.Suppliers.Domain
 {
@@ -8,6 +8,6 @@ namespace ProductsApplication.Features.Suppliers.Domain
         public string Name { get; set; } = null!;
         public string? ContactInfo { get; set; }
 
-        public ICollection<Products.Domain.Product>? Products { get; set; }
+        public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }
