@@ -79,7 +79,7 @@ namespace ProductsApplication.Data
                             .IsUnique()
                             .HasDatabaseName("ux_product_feature_feature_product");
                         // optional: control table name/column names
-                        j.ToTable("product_feature");
+                        j.ToTable("ProductFeature");
                     }
                 );
         }

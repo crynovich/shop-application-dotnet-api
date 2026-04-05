@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProductsApplication.Data;
@@ -11,9 +12,11 @@ using ProductsApplication.Data;
 namespace ProductsApplication.Migrations
 {
     [DbContext(typeof(ProductsDbContext))]
-    partial class ProductsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260405205435_AddCategoriesAndFeatures")]
+    partial class AddCategoriesAndFeatures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace ProductsApplication.Migrations
                         .IsUnique()
                         .HasDatabaseName("ux_product_feature_feature_product");
 
-                    b.ToTable("ProductFeature", (string)null);
+                    b.ToTable("product_feature", (string)null);
                 });
 
             modelBuilder.Entity("ProductsApplication.Features.Categories.Domain.Category", b =>
