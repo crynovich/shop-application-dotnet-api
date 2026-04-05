@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProductsApplication.Data;
+using ProductsApplication.Features.Products.Persistence;
+using ProductsApplication.Features.Suppliers.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,10 @@ builder.Services.AddSwaggerGen();
 // Configure EF Core to use PostgreSQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ProductsDbContext>(options => options.UseNpgsql(connectionString));
+
+// Register repositories (feature-specific)
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 
 var app = builder.Build();
 
