@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using ProductsApplication.Data;
 using ProductsApplication.Features.Products.Persistence;
 using ProductsApplication.Features.Suppliers.Persistence;
+using ProductsApplication.Features.Categories.Persistence;
+using ProductsApplication.Features.Features.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,8 @@ builder.Services.AddDbContext<ProductsDbContext>(options => options.UseNpgsql(co
 // Register repositories (feature-specific)
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IFeatureRepository, FeatureRepository>();
 
 var app = builder.Build();
 

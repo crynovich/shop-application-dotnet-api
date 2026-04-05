@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using ProductsApplication.Features.Products.Domain;
 
 namespace ProductsApplication.Features.Products.Persistence
