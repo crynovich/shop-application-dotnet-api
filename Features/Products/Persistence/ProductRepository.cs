@@ -25,6 +25,7 @@ namespace ProductsApplication.Features.Products.Persistence
             await _db.SaveChangesAsync();
         }
 
+        // todo: implement a more complicated query here
         public async Task<Product?> GetByIdAsync(int id)
         {
             return await _db.Products.Include(p => p.Supplier).FirstOrDefaultAsync(p => p.Id == id);
