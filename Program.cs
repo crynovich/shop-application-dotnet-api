@@ -4,6 +4,7 @@ using ProductsApplication.Features.Products.Persistence;
 using ProductsApplication.Features.Suppliers.Persistence;
 using ProductsApplication.Features.Categories.Persistence;
 using ProductsApplication.Features.Features.Persistence;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,9 @@ builder.Services.AddSwaggerGen();
 // Configure EF Core to use PostgreSQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ProductsDbContext>(options => options.UseNpgsql(connectionString));
+
+// MediatR (use-case handlers)
+builder.Services.AddMediatR(typeof(Program));
 
 // Register repositories (feature-specific)
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
