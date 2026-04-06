@@ -2,6 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using ProductsApplication.Features.Products.Domain;
 using ProductsApplication.Features.Products.Application.Commands.CreateProduct;
+using ProductsApplication.Features.Products.Application.Commands.DeleteProduct;
+using ProductsApplication.Features.Products.Application.Commands.UpdateProduct;
+using ProductsApplication.Features.Products.Application.Queries.GetProductById;
+using ProductsApplication.Features.Products.Application.Queries.ListProducts;
+using ProductsApplication.Features.Products.Domain;
+using ProductsApplication.Features.Products.Domain;
 
 namespace ProductsApplication.Features.Products.Api
 {
@@ -17,7 +23,7 @@ namespace ProductsApplication.Features.Products.Api
         public async Task<IActionResult> GetAll()
         {
             var items = await _mediator.Send(
-                new Application.Queries.ListProducts.ListProductsQuery()
+                new ListProductsQuery()
             );
             return Ok(items);
         }
@@ -26,7 +32,7 @@ namespace ProductsApplication.Features.Products.Api
         public async Task<IActionResult> Get(int id)
         {
             var item = await _mediator.Send(
-                new Application.Queries.GetProductById.GetProductByIdQuery(id)
+                new GetProductByIdQuery(id)
             );
             if (item is null)
                 return NotFound();
@@ -47,7 +53,7 @@ namespace ProductsApplication.Features.Products.Api
                 return BadRequest();
 
             await _mediator.Send(
-                new Application.Commands.UpdateProduct.UpdateProductCommand(id, product)
+                new UpdateProductCommand(id, product)
             );
             return NoContent();
         }
@@ -55,7 +61,7 @@ namespace ProductsApplication.Features.Products.Api
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(new Application.Commands.DeleteProduct.DeleteProductCommand(id));
+            await _mediator.Send(new DeleteProductCommand(id));
             return NoContent();
         }
     }

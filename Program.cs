@@ -5,6 +5,8 @@ using ProductsApplication.Features.Suppliers.Persistence;
 using ProductsApplication.Features.Categories.Persistence;
 using ProductsApplication.Features.Features.Persistence;
 using MediatR;
+using System;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +18,26 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure EF Core to use PostgreSQL
+// Configure EF Core to use PostgreSQL and enable query logging
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ProductsDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<ProductsDbContext>(options =>
+{
+    options.UseNpgsql(connectionString);
+
+    // Log SQL commands emitted by EF Core (DB command category)
+    options.LogTo(
+        Console.WriteLine,
+        new[] { DbLoggerCategory.Database.Command.Name },
+        LogLevel.Information
+    );
+
+    // Show parameter values only in Development
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableSensitiveDataLogging();
+    }
+});
 
 // MediatR (use-case handlers)
 builder.Services.AddMediatR(typeof(Program));
