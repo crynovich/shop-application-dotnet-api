@@ -6,8 +6,6 @@ using ProductsApplication.Features.Products.Application.Commands.DeleteProduct;
 using ProductsApplication.Features.Products.Application.Commands.UpdateProduct;
 using ProductsApplication.Features.Products.Application.Queries.GetProductById;
 using ProductsApplication.Features.Products.Application.Queries.ListProducts;
-using ProductsApplication.Features.Products.Domain;
-using ProductsApplication.Features.Products.Domain;
 
 namespace ProductsApplication.Features.Products.Api
 {
