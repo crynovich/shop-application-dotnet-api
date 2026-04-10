@@ -6,6 +6,8 @@ using ProductsApplication.Features.Categories.Persistence;
 using ProductsApplication.Features.Features.Persistence;
 using MediatR;
 using ProductsApplication.Common.Behaviours;
+using ProductsApplication.Features.Suppliers.Persistence;
+using ProductsApplication.Common.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +62,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.MapControllers();
 
