@@ -25,10 +25,44 @@ namespace ProductsApplication.Features.Products.Persistence
             await _db.SaveChangesAsync();
         }
 
-        // todo: implement a more complicated query here
         public async Task<Product?> GetByIdAsync(int id)
         {
-            return await _db.Products.Include(p => p.Supplier).FirstOrDefaultAsync(p => p.Id == id);
+            return await _db
+                .Products.Include(p => p.Supplier)
+                .Include(p => p.Category)
+                .Include(p => p.Features)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<Product?> GetByIdWithFeaturesAsync(int id)
+        {
+            return await _db.Products.Include(p => p.Features).FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<IEnumerable<Product>> GetBySupplierIdAsync(int supplierId)
+        {
+            return await _db.Products.Where(p => p.SupplierId == supplierId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> FindByNameAsync(string name)
+        {
+            return await _db.Products.Where(p => p.Name.Contains(name)).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetPagedAsync(int page, int pageSize)
+        {
+            return await _db.Products.Skip(pageSize * page).Take(pageSize).ToListAsync();
+        }
+
+        public async Task AddRangeAsync(IEnumerable<Product> products)
+        {
+            await _db.Products.AddRangeAsync(products);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _db.Products.CountAsync();
         }
 
         public async Task<IEnumerable<Product>> ListAsync()
@@ -38,7 +72,7 @@ namespace ProductsApplication.Features.Products.Persistence
 
         public async Task UpdateAsync(Product product)
         {
-            _db.Products.Update(product!);
+            _db.Products.Update(product);
             await _db.SaveChangesAsync();
         }
     }
