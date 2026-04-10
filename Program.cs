@@ -5,8 +5,7 @@ using ProductsApplication.Features.Suppliers.Persistence;
 using ProductsApplication.Features.Categories.Persistence;
 using ProductsApplication.Features.Features.Persistence;
 using MediatR;
-using System;
-using Microsoft.Extensions.Logging;
+using ProductsApplication.Common.Behaviours;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +40,9 @@ builder.Services.AddDbContext<ProductsDbContext>(options =>
 
 // MediatR (use-case handlers)
 builder.Services.AddMediatR(typeof(Program));
+
+// Pipeline behaviors (applied automatically to every request)
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
 // Register repositories (feature-specific)
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
